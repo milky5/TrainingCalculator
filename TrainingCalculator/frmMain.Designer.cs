@@ -49,6 +49,7 @@
             this.btnInput5 = new System.Windows.Forms.Button();
             this.btnInput6 = new System.Windows.Forms.Button();
             this.btnInput4 = new System.Windows.Forms.Button();
+            this.lblInputHistory = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtInputField
@@ -268,11 +269,21 @@
             this.btnInput4.UseVisualStyleBackColor = true;
             this.btnInput4.Click += new System.EventHandler(this.btnInput4_Click);
             // 
+            // lblInputHistory
+            // 
+            this.lblInputHistory.AutoSize = true;
+            this.lblInputHistory.Location = new System.Drawing.Point(306, 30);
+            this.lblInputHistory.Name = "lblInputHistory";
+            this.lblInputHistory.Size = new System.Drawing.Size(0, 12);
+            this.lblInputHistory.TabIndex = 21;
+            this.lblInputHistory.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(353, 411);
+            this.Controls.Add(this.lblInputHistory);
             this.Controls.Add(this.btnSub);
             this.Controls.Add(this.btnInput5);
             this.Controls.Add(this.btnInput6);
@@ -324,6 +335,7 @@
         private System.Windows.Forms.Button btnInput5;
         private System.Windows.Forms.Button btnInput6;
         private System.Windows.Forms.Button btnInput4;
+        private System.Windows.Forms.Label lblInputHistory;
     }
 }
 
