@@ -25,7 +25,12 @@ namespace TrainingCalculator
 
         private void btnBackSpace_Click(object sender, EventArgs e)
         {
-            txtInputField.Text = txtInputField.Text.Remove(txtInputField.Text.Length - 1, 1);
+            var _inputedText = txtInputField.Text;
+            if (_inputedText.Length > 0)
+            {
+                _inputedText = _inputedText.Remove(_inputedText.Length - 1);
+                txtInputField.Text = _inputedText;
+            }
         }
 
         private void btnCalculate_Click(object sender, EventArgs e)
