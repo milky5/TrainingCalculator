@@ -56,9 +56,10 @@
             // 
             this.txtInputField.Location = new System.Drawing.Point(12, 67);
             this.txtInputField.Name = "txtInputField";
-            this.txtInputField.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtInputField.ReadOnly = true;
             this.txtInputField.Size = new System.Drawing.Size(329, 19);
             this.txtInputField.TabIndex = 0;
+            this.txtInputField.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // btnInput7
             // 
@@ -227,6 +228,7 @@
             this.btnClearEntry.TabIndex = 13;
             this.btnClearEntry.Text = "CE";
             this.btnClearEntry.UseVisualStyleBackColor = false;
+            this.btnClearEntry.Click += new System.EventHandler(this.btnClearEntry_Click);
             // 
             // btnSub
             // 
@@ -276,7 +278,6 @@
             this.lblInputHistory.Name = "lblInputHistory";
             this.lblInputHistory.Size = new System.Drawing.Size(329, 55);
             this.lblInputHistory.TabIndex = 21;
-            this.lblInputHistory.Text = "Input History";
             this.lblInputHistory.TextAlign = System.Drawing.ContentAlignment.BottomRight;
             // 
             // frmMain
@@ -306,6 +307,8 @@
             this.Controls.Add(this.btnInput9);
             this.Controls.Add(this.btnInput7);
             this.Controls.Add(this.txtInputField);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frmMain";
             this.Text = "電卓";
             this.ResumeLayout(false);
