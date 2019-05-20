@@ -10,46 +10,44 @@ using System.Windows.Forms;
 
 namespace TrainingCalculator
 {
-    public delegate double Calculate(double a, double b);
+    /// <summary>
+    /// 値1と値2を計算させるのに、加減乗除のどの計算を適応するかを保持するデリゲート 
+    /// </summary>
+    /// <param name="a"> 値1 </param>
+    /// <param name="b"> 値2 </param>
+    /// <returns> 計算の答え </returns>
+    public delegate double Calc(double a, double b);
 
     public partial class frmMain : Form
     {
+        #region メンバ変数
         private double m_calculateAnswer;
-        private Calculate m_NextCalculation;
+        private Calc m_NextCalculation;
+        #endregion
 
         /// <summary>
-        /// 
+        /// コンストラクタ
         /// </summary>
         public frmMain()
         {
             InitializeComponent();
         }
 
-
+        /// <summary>
+        /// [+]ボタンが押された際に加算するメソッド
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            double _convertedNumber;
-            var result = double.TryParse(txtInputField.Text, out _convertedNumber);
-            if (!result)
-            {
-                MessageBox.Show("入力された値が正しくありません。");
-                return;
-            }
-            // デリゲートがnullだったら、Addメソッドを入れる
-            if (m_NextCalculation == null)
-            {
-                m_NextCalculation = Add;
-                m_calculateAnswer = _convertedNumber;
-            }
-            else
-            {
-                m_calculateAnswer = m_NextCalculation(m_calculateAnswer, _convertedNumber);
-                m_NextCalculation = Add;
-            }
-            txtInputField.Text = null;
-            
+            Calculate((double a, double b) => a + b);
         }
 
+        /// <summary>
+        /// [BackSpace]ボタンが押された際に文字列の末尾を削除するメソッド
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnBackSpace_Click(object sender, EventArgs e)
         {
             var _inputedText = txtInputField.Text;
@@ -62,6 +60,11 @@ namespace TrainingCalculator
             }
         }
 
+        /// <summary>
+        /// [=]ボタンが押された際に計算するメソッド
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCalculate_Click(object sender, EventArgs e)
         {
             double _convertedNumber;
@@ -87,7 +90,7 @@ namespace TrainingCalculator
 
         private void btnDiv_Click(object sender, EventArgs e)
         {
-
+            Calculate((double a, double b) => a / b);
         }
 
         #region 数字ボタンクリック時
@@ -144,7 +147,7 @@ namespace TrainingCalculator
 
         private void btnMulti_Click(object sender, EventArgs e)
         {
-
+            Calculate((double a, double b) => a * b);
         }
 
         private void btnPlusMinus_Click(object sender, EventArgs e)
@@ -159,43 +162,34 @@ namespace TrainingCalculator
 
         private void btnSub_Click(object sender, EventArgs e)
         {
-
+            Calculate((double a, double b) => a - b);
         }
 
 
-
-
-        private double Add(double a, double b)
+        private void Calculate(Calc calc)
         {
-            return a + b;
-        }
-
-        private double Sub(double a, double b)
-        {
-            return a - b;
-        }
-
-        private double Multi(double a, double b)
-        {
-            return a * b;
-        }
-
-        private double Div(double a, double b)
-        {
-            return a / b;
-        }
-
-        private bool CanConvertToDouble(string str)
-        {
-            try
+            double _convertedNumber;
+            var result = double.TryParse(txtInputField.Text, out _convertedNumber);
+            if (!result)
             {
-                var _result = double.Parse(str);
-                return true;
+                MessageBox.Show("入力された値が正しくありません。");
+                return;
             }
-            catch
+            // デリゲートがnullだったら、Addメソッドを入れる
+            if (m_NextCalculation == null)
             {
-                return false;
+                m_calculateAnswer = _convertedNumber;
             }
+            else
+            {
+                m_calculateAnswer = m_NextCalculation(m_calculateAnswer, _convertedNumber);
+            }
+
+            m_NextCalculation = calc;
+
+            lblInputHistory.Text += _convertedNumber.ToString();
+            lblInputHistory.Text += " ";
+            txtInputField.Text = null;
         }
     }
 }

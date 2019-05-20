@@ -271,12 +271,13 @@
             // 
             // lblInputHistory
             // 
-            this.lblInputHistory.AutoSize = true;
-            this.lblInputHistory.Location = new System.Drawing.Point(306, 30);
+            this.lblInputHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblInputHistory.Location = new System.Drawing.Point(12, 9);
             this.lblInputHistory.Name = "lblInputHistory";
-            this.lblInputHistory.Size = new System.Drawing.Size(0, 12);
+            this.lblInputHistory.Size = new System.Drawing.Size(329, 55);
             this.lblInputHistory.TabIndex = 21;
-            this.lblInputHistory.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblInputHistory.Text = "Input History";
+            this.lblInputHistory.TextAlign = System.Drawing.ContentAlignment.BottomRight;
             // 
             // frmMain
             // 
