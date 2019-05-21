@@ -49,7 +49,8 @@
             this.btnInput8 = new System.Windows.Forms.Button();
             this.btnInput9 = new System.Windows.Forms.Button();
             this.btnInput7 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblInputField = new System.Windows.Forms.Label();
+            this.lblconsole = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblInputHistory
@@ -69,6 +70,7 @@
             this.btnSub.TabIndex = 42;
             this.btnSub.Text = "－";
             this.btnSub.UseVisualStyleBackColor = false;
+            this.btnSub.Click += new System.EventHandler(this.btnSub_Click);
             // 
             // btnInput5
             // 
@@ -78,6 +80,7 @@
             this.btnInput5.TabIndex = 41;
             this.btnInput5.Text = "５";
             this.btnInput5.UseVisualStyleBackColor = true;
+            this.btnInput5.Click += new System.EventHandler(this.btnInput5_Click);
             // 
             // btnInput6
             // 
@@ -87,6 +90,7 @@
             this.btnInput6.TabIndex = 40;
             this.btnInput6.Text = "６";
             this.btnInput6.UseVisualStyleBackColor = true;
+            this.btnInput6.Click += new System.EventHandler(this.btnInput6_Click);
             // 
             // btnInput4
             // 
@@ -96,6 +100,7 @@
             this.btnInput4.TabIndex = 39;
             this.btnInput4.Text = "４";
             this.btnInput4.UseVisualStyleBackColor = true;
+            this.btnInput4.Click += new System.EventHandler(this.btnInput4_Click);
             // 
             // btnDiv
             // 
@@ -106,6 +111,7 @@
             this.btnDiv.TabIndex = 38;
             this.btnDiv.Text = "÷";
             this.btnDiv.UseVisualStyleBackColor = false;
+            this.btnDiv.Click += new System.EventHandler(this.btnDiv_Click);
             // 
             // btnClear
             // 
@@ -116,6 +122,7 @@
             this.btnClear.TabIndex = 37;
             this.btnClear.Text = "C";
             this.btnClear.UseVisualStyleBackColor = false;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnBackSpace
             // 
@@ -126,6 +133,7 @@
             this.btnBackSpace.TabIndex = 36;
             this.btnBackSpace.Text = "Back Space";
             this.btnBackSpace.UseVisualStyleBackColor = false;
+            this.btnBackSpace.Click += new System.EventHandler(this.btnBackSpace_Click);
             // 
             // btnClearEntry
             // 
@@ -136,6 +144,7 @@
             this.btnClearEntry.TabIndex = 35;
             this.btnClearEntry.Text = "CE";
             this.btnClearEntry.UseVisualStyleBackColor = false;
+            this.btnClearEntry.Click += new System.EventHandler(this.btnClearEntry_Click);
             // 
             // btnAdd
             // 
@@ -146,6 +155,7 @@
             this.btnAdd.TabIndex = 34;
             this.btnAdd.Text = "＋";
             this.btnAdd.UseVisualStyleBackColor = false;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnInput2
             // 
@@ -155,6 +165,7 @@
             this.btnInput2.TabIndex = 33;
             this.btnInput2.Text = "２";
             this.btnInput2.UseVisualStyleBackColor = true;
+            this.btnInput2.Click += new System.EventHandler(this.btnInput2_Click);
             // 
             // btnInput3
             // 
@@ -164,6 +175,7 @@
             this.btnInput3.TabIndex = 32;
             this.btnInput3.Text = "３";
             this.btnInput3.UseVisualStyleBackColor = true;
+            this.btnInput3.Click += new System.EventHandler(this.btnInput3_Click);
             // 
             // btnInput1
             // 
@@ -173,6 +185,7 @@
             this.btnInput1.TabIndex = 31;
             this.btnInput1.Text = "１";
             this.btnInput1.UseVisualStyleBackColor = true;
+            this.btnInput1.Click += new System.EventHandler(this.btnInput1_Click);
             // 
             // btnCalculate
             // 
@@ -183,6 +196,7 @@
             this.btnCalculate.TabIndex = 30;
             this.btnCalculate.Text = "＝";
             this.btnCalculate.UseVisualStyleBackColor = false;
+            this.btnCalculate.Click += new System.EventHandler(this.btnCalculate_Click);
             // 
             // btnInput0
             // 
@@ -192,6 +206,7 @@
             this.btnInput0.TabIndex = 29;
             this.btnInput0.Text = "０";
             this.btnInput0.UseVisualStyleBackColor = true;
+            this.btnInput0.Click += new System.EventHandler(this.btnInput0_Click);
             // 
             // btnPeriod
             // 
@@ -202,6 +217,7 @@
             this.btnPeriod.TabIndex = 28;
             this.btnPeriod.Text = ".";
             this.btnPeriod.UseVisualStyleBackColor = false;
+            this.btnPeriod.Click += new System.EventHandler(this.btnPeriod_Click);
             // 
             // btnPlusMinus
             // 
@@ -212,6 +228,7 @@
             this.btnPlusMinus.TabIndex = 27;
             this.btnPlusMinus.Text = "±";
             this.btnPlusMinus.UseVisualStyleBackColor = false;
+            this.btnPlusMinus.Click += new System.EventHandler(this.btnPlusMinus_Click);
             // 
             // btnMulti
             // 
@@ -222,6 +239,7 @@
             this.btnMulti.TabIndex = 26;
             this.btnMulti.Text = "×";
             this.btnMulti.UseVisualStyleBackColor = false;
+            this.btnMulti.Click += new System.EventHandler(this.btnMulti_Click);
             // 
             // btnInput8
             // 
@@ -231,6 +249,7 @@
             this.btnInput8.TabIndex = 25;
             this.btnInput8.Text = "８";
             this.btnInput8.UseVisualStyleBackColor = true;
+            this.btnInput8.Click += new System.EventHandler(this.btnInput8_Click);
             // 
             // btnInput9
             // 
@@ -240,6 +259,7 @@
             this.btnInput9.TabIndex = 24;
             this.btnInput9.Text = "９";
             this.btnInput9.UseVisualStyleBackColor = true;
+            this.btnInput9.Click += new System.EventHandler(this.btnInput9_Click);
             // 
             // btnInput7
             // 
@@ -249,24 +269,34 @@
             this.btnInput7.TabIndex = 23;
             this.btnInput7.Text = "７";
             this.btnInput7.UseVisualStyleBackColor = true;
+            this.btnInput7.Click += new System.EventHandler(this.btnInput7_Click);
             // 
-            // label1
+            // lblInputField
             // 
-            this.label1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label1.Font = new System.Drawing.Font("MS UI Gothic", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.label1.Location = new System.Drawing.Point(11, 74);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(334, 24);
-            this.label1.TabIndex = 44;
-            this.label1.Text = "0";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblInputField.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lblInputField.Font = new System.Drawing.Font("MS UI Gothic", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.lblInputField.Location = new System.Drawing.Point(11, 74);
+            this.lblInputField.Name = "lblInputField";
+            this.lblInputField.Size = new System.Drawing.Size(334, 24);
+            this.lblInputField.TabIndex = 44;
+            this.lblInputField.Text = "0";
+            this.lblInputField.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblconsole
+            // 
+            this.lblconsole.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lblconsole.Location = new System.Drawing.Point(0, 384);
+            this.lblconsole.Name = "lblconsole";
+            this.lblconsole.Size = new System.Drawing.Size(356, 16);
+            this.lblconsole.TabIndex = 45;
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(356, 371);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(356, 399);
+            this.Controls.Add(this.lblconsole);
+            this.Controls.Add(this.lblInputField);
             this.Controls.Add(this.lblInputHistory);
             this.Controls.Add(this.btnSub);
             this.Controls.Add(this.btnInput5);
@@ -319,7 +349,8 @@
         private System.Windows.Forms.Button btnInput8;
         private System.Windows.Forms.Button btnInput9;
         private System.Windows.Forms.Button btnInput7;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblInputField;
+        private System.Windows.Forms.Label lblconsole;
     }
 }
 
