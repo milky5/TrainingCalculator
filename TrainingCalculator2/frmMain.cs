@@ -74,7 +74,7 @@ namespace TrainingCalculator2
         #region ボタンが押された際に呼ばれるメソッド
 
         /// <summary>
-        /// [+]ボタンが押された際に呼ばれるメソッド
+        /// 保留された演算を実行し、加算を保留しておくメソッド
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -89,7 +89,7 @@ namespace TrainingCalculator2
         }
 
         /// <summary>
-        /// 入力の末尾1文字を消す
+        /// 入力された値の末尾1文字を消す
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -189,7 +189,7 @@ namespace TrainingCalculator2
         }
 
         /// <summary>
-        /// [÷]ボタンが押された際に呼ばれるメソッド
+        /// 保留された演算を実行し、除算を保留しておくメソッド
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -205,7 +205,7 @@ namespace TrainingCalculator2
 
         #region 数字ボタンが押された時
         /// <summary>
-        /// 0を入力したいときの処理
+        /// 0を入力するための処理
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -216,7 +216,7 @@ namespace TrainingCalculator2
         }
 
         /// <summary>
-        /// 1を入力したいときの処理
+        /// 1を入力するための処理
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -227,7 +227,7 @@ namespace TrainingCalculator2
         }
 
         /// <summary>
-        /// 2を入力したいときの処理
+        /// 2を入力するための処理
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -238,7 +238,7 @@ namespace TrainingCalculator2
         }
 
         /// <summary>
-        /// 3を入力したいときの処理
+        /// 3を入力するための処理
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -249,7 +249,7 @@ namespace TrainingCalculator2
         }
 
         /// <summary>
-        /// 4を入力したいときの処理
+        /// 4を入力するための処理
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -260,7 +260,7 @@ namespace TrainingCalculator2
         }
 
         /// <summary>
-        /// 5を入力したいときの処理
+        /// 5を入力するための処理
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -271,7 +271,7 @@ namespace TrainingCalculator2
         }
 
         /// <summary>
-        /// 6を入力したいときの処理
+        /// 6を入力するための処理
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -282,7 +282,7 @@ namespace TrainingCalculator2
         }
 
         /// <summary>
-        /// 7を入力したいときの処理
+        /// 7を入力するための処理
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -293,7 +293,7 @@ namespace TrainingCalculator2
         }
 
         /// <summary>
-        /// 8を入力したいときの処理
+        /// 8を入力するための処理
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -304,7 +304,7 @@ namespace TrainingCalculator2
         }
 
         /// <summary>
-        /// 9を入力したいときの処理
+        /// 9を入力するための処理
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -316,7 +316,7 @@ namespace TrainingCalculator2
         #endregion
 
         /// <summary>
-        /// [×]ボタンが押された際に呼ばれるメソッド
+        /// 保留された演算を実行し、乗算を保留しておくメソッド
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -380,7 +380,7 @@ namespace TrainingCalculator2
         }
 
         /// <summary>
-        /// [-]ボタンが押された際に呼ばれるメソッド
+        /// 保留された演算を実行し、減算を保留しておくメソッド
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -397,7 +397,7 @@ namespace TrainingCalculator2
         #endregion
 
         /// <summary>
-        /// キーボード入力イベントををformで受ける
+        /// キーボード入力イベントを受けとり、適切なメソッドに割り振る
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -450,7 +450,7 @@ namespace TrainingCalculator2
         }
 
         /// <summary>
-        /// 数字が入力される際の共通処理
+        /// 数字入力の際に文字列を適切に表示する
         /// </summary>
         private void InputNumberCommon()
         {
@@ -472,7 +472,7 @@ namespace TrainingCalculator2
         }
 
         /// <summary>
-        /// 演算子が入力される際の共通処理
+        /// 保留された演算を実行し、結果をラベルに表示する
         /// </summary>
         void OperatorClick(string symbol)
         {
