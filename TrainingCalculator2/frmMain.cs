@@ -172,6 +172,10 @@ namespace TrainingCalculator2
         private void btnBackSpace_Click(object sender, EventArgs e)
         {
             // 暫定答えの場合は消えない(何も起こらない)
+            if (m_isShowingAnswer == true)
+            {
+                return;
+            }
 
             var _inputedText = lblInputField.Text;
             // 1文字以上入力されていたら
@@ -197,7 +201,7 @@ namespace TrainingCalculator2
 
             OperatorClick();
 
-            // 次回のために除算を保持する
+            // 常数計算のために除算を保持する
             m_isCanChangeSymbol = true;
             m_nextCalculation = ((double a) => a / m_calculateConstant);
         }
@@ -206,7 +210,7 @@ namespace TrainingCalculator2
         {
             OperatorClick();
 
-            // 今回のを定数式として取っておく
+            // 常数計算のために乗算を保持する
             m_isCanChangeSymbol = true;
             m_nextCalculation = ((double a) => a * m_calculateConstant);
         }
@@ -215,7 +219,7 @@ namespace TrainingCalculator2
         {
             OperatorClick();
 
-            // 次回のために除算を保持する
+            // 常数計算のために減算を保持する
             m_isCanChangeSymbol = true;
             m_nextCalculation = ((double a) => a - m_calculateConstant);
         }
@@ -224,7 +228,7 @@ namespace TrainingCalculator2
         {
             OperatorClick();
 
-            // 次回のために除算を保持する
+            // 常数計算のために加算を保持する
             m_isCanChangeSymbol = true;
             m_nextCalculation = ((double a) => a + m_calculateConstant);
         }
@@ -242,7 +246,7 @@ namespace TrainingCalculator2
                 m_calculateConstant = m_answer;
             }
             // 数字の後に[=]押された時の処理
-            else if (m_isCanChangeSymbol == false && m_isShowingAnswer == true)
+            else if (m_isCanChangeSymbol == false && m_isShowingAnswer == false)
             {
                 // 入力値を定数計算のために保持する
                 m_calculateConstant = double.Parse(lblInputField.Text);
@@ -252,6 +256,7 @@ namespace TrainingCalculator2
             m_answer = m_nextCalculation(m_answer);
 
             //debug
+            m_isShowingAnswer = true;
             lblconsole.Text = m_answer.ToString();
 
         }
@@ -337,6 +342,7 @@ namespace TrainingCalculator2
                 m_answer = m_nextCalculation(m_answer);
             }
             // デバッグ用
+            m_isShowingAnswer = true;
             lblconsole.Text = m_answer.ToString();
         }
 
