@@ -50,7 +50,6 @@
             this.btnInput9 = new System.Windows.Forms.Button();
             this.btnInput7 = new System.Windows.Forms.Button();
             this.lblInputField = new System.Windows.Forms.Label();
-            this.lblconsole = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblInputHistory
@@ -282,20 +281,11 @@
             this.lblInputField.Text = "0";
             this.lblInputField.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // lblconsole
-            // 
-            this.lblconsole.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lblconsole.Location = new System.Drawing.Point(0, 384);
-            this.lblconsole.Name = "lblconsole";
-            this.lblconsole.Size = new System.Drawing.Size(356, 16);
-            this.lblconsole.TabIndex = 45;
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(356, 399);
-            this.Controls.Add(this.lblconsole);
+            this.ClientSize = new System.Drawing.Size(356, 365);
             this.Controls.Add(this.lblInputField);
             this.Controls.Add(this.lblInputHistory);
             this.Controls.Add(this.btnSub);
@@ -319,6 +309,7 @@
             this.Controls.Add(this.btnInput9);
             this.Controls.Add(this.btnInput7);
             this.KeyPreview = true;
+            this.MaximizeBox = false;
             this.Name = "frmMain";
             this.Text = "電卓";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmMain_KeyDown);
@@ -350,7 +341,6 @@
         private System.Windows.Forms.Button btnInput9;
         private System.Windows.Forms.Button btnInput7;
         private System.Windows.Forms.Label lblInputField;
-        private System.Windows.Forms.Label lblconsole;
     }
 }
 
