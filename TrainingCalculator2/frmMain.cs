@@ -54,6 +54,8 @@ namespace TrainingCalculator2
         /// </summary>
         private string m_tempHistory;
 
+        bool m_isShowingFinalAnswer;
+
         #endregion
 
 
@@ -149,6 +151,7 @@ namespace TrainingCalculator2
             m_answer = m_nextCalculation(m_answer);
 
             m_isShowingAnswer = true;
+            m_isShowingFinalAnswer = true;
             btnPlusMinus.Enabled = false;
             lblInputField.Text = m_answer.ToString();
             m_inputHistory = null;
@@ -454,6 +457,14 @@ namespace TrainingCalculator2
         /// </summary>
         private void InputNumberCommon()
         {
+            if (m_isShowingFinalAnswer)
+            {
+                m_isShowingFinalAnswer = false;
+
+                m_nextCalculation = null;
+                m_calculateConstant = 0;
+            }
+
             if (m_isShowingAnswer)
             {
                 lblInputField.Text = "";
@@ -483,12 +494,18 @@ namespace TrainingCalculator2
                 return;
             }
 
-            if (m_isShowingAnswer == true)
+            if (m_isShowingFinalAnswer == true)
             {
                 m_calculateConstant = 0;
                 m_nextCalculation = null;
                 m_beforeInputSymbolIsDiv = false;
                 m_answer = 0;
+                m_isShowingFinalAnswer = false;
+            }
+
+            if (m_isShowingAnswer == true)
+            {
+
             }
 
             m_calculateConstant = double.Parse(lblInputField.Text);
