@@ -68,9 +68,6 @@ namespace TrainingCalculator2
         {
             InitializeComponent();
 
-            // サイズ変更できないようにする
-            MaximumSize = Size;
-            MinimumSize = Size;
         }
 
         #region ボタンが押された際に呼ばれるメソッド
@@ -206,117 +203,30 @@ namespace TrainingCalculator2
             m_beforeInputSymbolIsDiv = true;
         }
 
-        #region 数字ボタンが押された時
-        /// <summary>
-        /// 0を入力するための処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnInput0_Click(object sender, EventArgs e)
+        private void btnInputNumber_Click(object sender ,EventArgs e)
         {
             InputNumberCommon();
-            lblInputField.Text += "0";
-        }
 
-        /// <summary>
-        /// 1を入力するための処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnInput1_Click(object sender, EventArgs e)
-        {
-            InputNumberCommon();
-            lblInputField.Text += "1";
-        }
+            var _sender = sender.GetType();
 
-        /// <summary>
-        /// 2を入力するための処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnInput2_Click(object sender, EventArgs e)
-        {
-            InputNumberCommon();
-            lblInputField.Text += "2";
-        }
+            // senderがButtonなら
+            if (sender is Button)
+            {
+                var _inputedButton = (Button)sender;
+                lblInputField.Text += _inputedButton.Text;
+            }
+            // senderがformなら、keyeventargsから値を取得
+            else if (sender is Form)
+            {
+                var _inputedKey = (KeyEventArgs)e;
+                var _key = _inputedKey.KeyCode;
+                var _result = _key.ToString();
 
-        /// <summary>
-        /// 3を入力するための処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnInput3_Click(object sender, EventArgs e)
-        {
-            InputNumberCommon();
-            lblInputField.Text += "3";
-        }
+            }
 
-        /// <summary>
-        /// 4を入力するための処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnInput4_Click(object sender, EventArgs e)
-        {
-            InputNumberCommon();
-            lblInputField.Text += "4";
+            
+            
         }
-
-        /// <summary>
-        /// 5を入力するための処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnInput5_Click(object sender, EventArgs e)
-        {
-            InputNumberCommon();
-            lblInputField.Text += "5";
-        }
-
-        /// <summary>
-        /// 6を入力するための処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnInput6_Click(object sender, EventArgs e)
-        {
-            InputNumberCommon();
-            lblInputField.Text += "6";
-        }
-
-        /// <summary>
-        /// 7を入力するための処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnInput7_Click(object sender, EventArgs e)
-        {
-            InputNumberCommon();
-            lblInputField.Text += "7";
-        }
-
-        /// <summary>
-        /// 8を入力するための処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnInput8_Click(object sender, EventArgs e)
-        {
-            InputNumberCommon();
-            lblInputField.Text += "8";
-        }
-
-        /// <summary>
-        /// 9を入力するための処理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnInput9_Click(object sender, EventArgs e)
-        {
-            InputNumberCommon();
-            lblInputField.Text += "9";
-        }
-        #endregion
 
         /// <summary>
         /// 保留された演算を実行し、乗算を保留しておくメソッド
@@ -409,34 +319,16 @@ namespace TrainingCalculator2
             switch (e.KeyCode)
             {
                 case Keys.D0:
-                    btnInput0_Click(sender, e);
-                    break;
                 case Keys.D1:
-                    btnInput1_Click(sender, e);
-                    break;
                 case Keys.D2:
-                    btnInput2_Click(sender, e);
-                    break;
                 case Keys.D3:
-                    btnInput3_Click(sender, e);
-                    break;
                 case Keys.D4:
-                    btnInput4_Click(sender, e);
-                    break;
                 case Keys.D5:
-                    btnInput5_Click(sender, e);
-                    break;
                 case Keys.D6:
-                    btnInput6_Click(sender, e);
-                    break;
                 case Keys.D7:
-                    btnInput7_Click(sender, e);
-                    break;
                 case Keys.D8:
-                    btnInput8_Click(sender, e);
-                    break;
                 case Keys.D9:
-                    btnInput9_Click(sender, e);
+                    btnInputNumber_Click(sender, e);
                     break;
                 case Keys.Back:
                     btnBackSpace_Click(sender, e);
@@ -448,7 +340,7 @@ namespace TrainingCalculator2
                     break;
             }
 
-            // 子フォームでこのイベントを拾わないようにする
+            // 子コントロールでこのイベントを拾わないようにする
             e.Handled = true;
         }
 
@@ -503,10 +395,6 @@ namespace TrainingCalculator2
                 m_isShowingFinalAnswer = false;
             }
 
-            if (m_isShowingAnswer == true)
-            {
-
-            }
 
             m_calculateConstant = double.Parse(lblInputField.Text);
 

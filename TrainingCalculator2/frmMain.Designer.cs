@@ -79,7 +79,7 @@
             this.btnInput5.TabIndex = 41;
             this.btnInput5.Text = "5";
             this.btnInput5.UseVisualStyleBackColor = true;
-            this.btnInput5.Click += new System.EventHandler(this.btnInput5_Click);
+            this.btnInput5.Click += new System.EventHandler(this.btnInputNumber_Click);
             // 
             // btnInput6
             // 
@@ -89,7 +89,7 @@
             this.btnInput6.TabIndex = 40;
             this.btnInput6.Text = "6";
             this.btnInput6.UseVisualStyleBackColor = true;
-            this.btnInput6.Click += new System.EventHandler(this.btnInput6_Click);
+            this.btnInput6.Click += new System.EventHandler(this.btnInputNumber_Click);
             // 
             // btnInput4
             // 
@@ -99,7 +99,7 @@
             this.btnInput4.TabIndex = 39;
             this.btnInput4.Text = "4";
             this.btnInput4.UseVisualStyleBackColor = true;
-            this.btnInput4.Click += new System.EventHandler(this.btnInput4_Click);
+            this.btnInput4.Click += new System.EventHandler(this.btnInputNumber_Click);
             // 
             // btnDiv
             // 
@@ -164,7 +164,7 @@
             this.btnInput2.TabIndex = 33;
             this.btnInput2.Text = "2";
             this.btnInput2.UseVisualStyleBackColor = true;
-            this.btnInput2.Click += new System.EventHandler(this.btnInput2_Click);
+            this.btnInput2.Click += new System.EventHandler(this.btnInputNumber_Click);
             // 
             // btnInput3
             // 
@@ -174,7 +174,7 @@
             this.btnInput3.TabIndex = 32;
             this.btnInput3.Text = "3";
             this.btnInput3.UseVisualStyleBackColor = true;
-            this.btnInput3.Click += new System.EventHandler(this.btnInput3_Click);
+            this.btnInput3.Click += new System.EventHandler(this.btnInputNumber_Click);
             // 
             // btnInput1
             // 
@@ -184,7 +184,7 @@
             this.btnInput1.TabIndex = 31;
             this.btnInput1.Text = "1";
             this.btnInput1.UseVisualStyleBackColor = true;
-            this.btnInput1.Click += new System.EventHandler(this.btnInput1_Click);
+            this.btnInput1.Click += new System.EventHandler(this.btnInputNumber_Click);
             // 
             // btnCalculate
             // 
@@ -205,7 +205,7 @@
             this.btnInput0.TabIndex = 29;
             this.btnInput0.Text = "0";
             this.btnInput0.UseVisualStyleBackColor = true;
-            this.btnInput0.Click += new System.EventHandler(this.btnInput0_Click);
+            this.btnInput0.Click += new System.EventHandler(this.btnInputNumber_Click);
             // 
             // btnPeriod
             // 
@@ -248,7 +248,7 @@
             this.btnInput8.TabIndex = 25;
             this.btnInput8.Text = "8";
             this.btnInput8.UseVisualStyleBackColor = true;
-            this.btnInput8.Click += new System.EventHandler(this.btnInput8_Click);
+            this.btnInput8.Click += new System.EventHandler(this.btnInputNumber_Click);
             // 
             // btnInput9
             // 
@@ -258,7 +258,7 @@
             this.btnInput9.TabIndex = 24;
             this.btnInput9.Text = "9";
             this.btnInput9.UseVisualStyleBackColor = true;
-            this.btnInput9.Click += new System.EventHandler(this.btnInput9_Click);
+            this.btnInput9.Click += new System.EventHandler(this.btnInputNumber_Click);
             // 
             // btnInput7
             // 
@@ -268,7 +268,7 @@
             this.btnInput7.TabIndex = 23;
             this.btnInput7.Text = "7";
             this.btnInput7.UseVisualStyleBackColor = true;
-            this.btnInput7.Click += new System.EventHandler(this.btnInput7_Click);
+            this.btnInput7.Click += new System.EventHandler(this.btnInputNumber_Click);
             // 
             // lblInputField
             // 
@@ -308,6 +308,7 @@
             this.Controls.Add(this.btnInput8);
             this.Controls.Add(this.btnInput9);
             this.Controls.Add(this.btnInput7);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.Name = "frmMain";
