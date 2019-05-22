@@ -77,7 +77,7 @@
             this.btnInput5.Name = "btnInput5";
             this.btnInput5.Size = new System.Drawing.Size(79, 44);
             this.btnInput5.TabIndex = 41;
-            this.btnInput5.Text = "５";
+            this.btnInput5.Text = "5";
             this.btnInput5.UseVisualStyleBackColor = true;
             this.btnInput5.Click += new System.EventHandler(this.btnInput5_Click);
             // 
@@ -87,7 +87,7 @@
             this.btnInput6.Name = "btnInput6";
             this.btnInput6.Size = new System.Drawing.Size(79, 44);
             this.btnInput6.TabIndex = 40;
-            this.btnInput6.Text = "６";
+            this.btnInput6.Text = "6";
             this.btnInput6.UseVisualStyleBackColor = true;
             this.btnInput6.Click += new System.EventHandler(this.btnInput6_Click);
             // 
@@ -97,7 +97,7 @@
             this.btnInput4.Name = "btnInput4";
             this.btnInput4.Size = new System.Drawing.Size(79, 44);
             this.btnInput4.TabIndex = 39;
-            this.btnInput4.Text = "４";
+            this.btnInput4.Text = "4";
             this.btnInput4.UseVisualStyleBackColor = true;
             this.btnInput4.Click += new System.EventHandler(this.btnInput4_Click);
             // 
@@ -162,7 +162,7 @@
             this.btnInput2.Name = "btnInput2";
             this.btnInput2.Size = new System.Drawing.Size(79, 44);
             this.btnInput2.TabIndex = 33;
-            this.btnInput2.Text = "２";
+            this.btnInput2.Text = "2";
             this.btnInput2.UseVisualStyleBackColor = true;
             this.btnInput2.Click += new System.EventHandler(this.btnInput2_Click);
             // 
@@ -172,7 +172,7 @@
             this.btnInput3.Name = "btnInput3";
             this.btnInput3.Size = new System.Drawing.Size(79, 44);
             this.btnInput3.TabIndex = 32;
-            this.btnInput3.Text = "３";
+            this.btnInput3.Text = "3";
             this.btnInput3.UseVisualStyleBackColor = true;
             this.btnInput3.Click += new System.EventHandler(this.btnInput3_Click);
             // 
@@ -182,7 +182,7 @@
             this.btnInput1.Name = "btnInput1";
             this.btnInput1.Size = new System.Drawing.Size(79, 44);
             this.btnInput1.TabIndex = 31;
-            this.btnInput1.Text = "１";
+            this.btnInput1.Text = "1";
             this.btnInput1.UseVisualStyleBackColor = true;
             this.btnInput1.Click += new System.EventHandler(this.btnInput1_Click);
             // 
@@ -203,7 +203,7 @@
             this.btnInput0.Name = "btnInput0";
             this.btnInput0.Size = new System.Drawing.Size(79, 44);
             this.btnInput0.TabIndex = 29;
-            this.btnInput0.Text = "０";
+            this.btnInput0.Text = "0";
             this.btnInput0.UseVisualStyleBackColor = true;
             this.btnInput0.Click += new System.EventHandler(this.btnInput0_Click);
             // 
@@ -246,7 +246,7 @@
             this.btnInput8.Name = "btnInput8";
             this.btnInput8.Size = new System.Drawing.Size(79, 44);
             this.btnInput8.TabIndex = 25;
-            this.btnInput8.Text = "８";
+            this.btnInput8.Text = "8";
             this.btnInput8.UseVisualStyleBackColor = true;
             this.btnInput8.Click += new System.EventHandler(this.btnInput8_Click);
             // 
@@ -256,7 +256,7 @@
             this.btnInput9.Name = "btnInput9";
             this.btnInput9.Size = new System.Drawing.Size(79, 44);
             this.btnInput9.TabIndex = 24;
-            this.btnInput9.Text = "９";
+            this.btnInput9.Text = "9";
             this.btnInput9.UseVisualStyleBackColor = true;
             this.btnInput9.Click += new System.EventHandler(this.btnInput9_Click);
             // 
@@ -266,7 +266,7 @@
             this.btnInput7.Name = "btnInput7";
             this.btnInput7.Size = new System.Drawing.Size(79, 44);
             this.btnInput7.TabIndex = 23;
-            this.btnInput7.Text = "７";
+            this.btnInput7.Text = "7";
             this.btnInput7.UseVisualStyleBackColor = true;
             this.btnInput7.Click += new System.EventHandler(this.btnInput7_Click);
             // 
