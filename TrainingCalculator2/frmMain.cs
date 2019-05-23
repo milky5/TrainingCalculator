@@ -103,18 +103,22 @@ namespace TrainingCalculator2
                 return;
             }
 
-            var _inputedText = lblInputField.Text;
             // 1文字以上入力されていたら
-            if (_inputedText.Length > 0)
+            if (lblInputField.Text.Length > 0)
             {
                 // 文字列の最後の1字だけ削除する
-                _inputedText = _inputedText.Remove(_inputedText.Length - 1);
-                lblInputField.Text = _inputedText;
+                lblInputField.Text = lblInputField.Text.Remove(lblInputField.Text.Length - 1);
             }
-            // 最後の一文字だった場合は表示が0になる
-            if (_inputedText.Length == 0)
+            if (lblInputField.Text == "-")
+            {
+                lblInputField.Text = "";
+            }
+            // 文字列がない場合は表示が0になる
+            if (lblInputField.Text.Length == 0)
             {
                 lblInputField.Text = "0";
+                btnPlusMinus.Enabled = false;
+                btnBackSpace.Enabled = false;
             }
         }
 
@@ -157,7 +161,7 @@ namespace TrainingCalculator2
 
             m_isShowingAnswer = true;
             m_isShowingFinalAnswer = true;
-            btnPlusMinus.Enabled = false;
+            btnPlusMinus.Enabled = true;
             btnBackSpace.Enabled = false;
             lblInputField.Text = m_answer.ToString();
             m_inputHistory = null;
@@ -185,6 +189,8 @@ namespace TrainingCalculator2
             m_beforeInputSymbolIsDiv = false;
             m_inputHistory = null;
             m_tempHistory = null;
+
+            btnPlusMinus.Enabled = false;
         }
 
         /// <summary>
@@ -195,8 +201,7 @@ namespace TrainingCalculator2
         private void btnClearEntry_Click(object sender, EventArgs e)
         {
             lblInputField.Text = "0";
-            //m_beforeInputIsOperator = false;
-            //m_isShowingAnswer = false;
+            btnPlusMinus.Enabled = false;
         }
 
         /// <summary>
@@ -235,7 +240,16 @@ namespace TrainingCalculator2
 
             }
 
-
+            if (lblInputField.Text == "0")
+            {
+                btnPlusMinus.Enabled = false;
+                btnBackSpace.Enabled = false;
+            }
+            else
+            {
+                btnPlusMinus.Enabled = true;
+                btnPlusMinus.Enabled = true;
+            }
 
         }
 
@@ -263,10 +277,13 @@ namespace TrainingCalculator2
         private void btnPeriod_Click(object sender, EventArgs e)
         {
 
+            btnPlusMinus.Enabled = true;
+
             // 暫定答えが表示されているなら、[0.]を挿入
             if (m_isShowingAnswer == true)
             {
                 // 先頭に[0.]を追加する
+                lblInputField.Text = "";
                 lblInputField.Text = lblInputField.Text.Insert(0, "0.");
 
                 m_isShowingAnswer = false;
@@ -292,6 +309,13 @@ namespace TrainingCalculator2
         /// <param name="e"></param>
         private void btnPlusMinus_Click(object sender, EventArgs e)
         {
+            if (m_beforeInputIsOperator == true && m_isShowingAnswer == true)
+            {
+                m_beforeInputIsOperator = false;
+            }
+
+
+
             // 入力値に[-]が含まれていたら
             if (lblInputField.Text.Contains("-") == true)
             {
@@ -377,7 +401,6 @@ namespace TrainingCalculator2
             {
                 lblInputField.Text = "";
                 m_isShowingAnswer = false;
-                btnPlusMinus.Enabled = true;
                 btnBackSpace.Enabled = true;
 
                 m_inputHistory += m_tempHistory;
@@ -412,6 +435,11 @@ namespace TrainingCalculator2
                 m_nextOperator = Operator.nothing;
             }
 
+            if (m_isShowingAnswer == true)
+            {
+                m_inputHistory += m_tempHistory;
+            }
+
 
             m_calculateConstant = double.Parse(lblInputField.Text);
 
@@ -435,7 +463,7 @@ namespace TrainingCalculator2
             }
             // デバッグ用
             m_isShowingAnswer = true;
-            btnPlusMinus.Enabled = false;
+            btnPlusMinus.Enabled = true;
             btnBackSpace.Enabled = false;
             lblInputField.Text = m_answer.ToString();
 

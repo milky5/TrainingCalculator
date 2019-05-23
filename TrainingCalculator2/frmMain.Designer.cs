@@ -221,6 +221,7 @@
             // btnPlusMinus
             // 
             this.btnPlusMinus.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.btnPlusMinus.Enabled = false;
             this.btnPlusMinus.Location = new System.Drawing.Point(11, 315);
             this.btnPlusMinus.Name = "btnPlusMinus";
             this.btnPlusMinus.Size = new System.Drawing.Size(79, 44);
