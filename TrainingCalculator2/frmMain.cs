@@ -480,3 +480,5 @@ namespace TrainingCalculator2
         Div
     }
 }
+
+// 再度テスト
