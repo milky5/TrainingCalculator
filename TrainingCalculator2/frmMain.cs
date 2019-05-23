@@ -158,6 +158,7 @@ namespace TrainingCalculator2
             m_isShowingAnswer = true;
             m_isShowingFinalAnswer = true;
             btnPlusMinus.Enabled = false;
+            btnBackSpace.Enabled = false;
             lblInputField.Text = m_answer.ToString();
             m_inputHistory = null;
             m_tempHistory = null;
@@ -270,6 +271,7 @@ namespace TrainingCalculator2
 
                 m_isShowingAnswer = false;
                 btnPlusMinus.Enabled = true;
+                btnBackSpace.Enabled = true;
                 return;
             }
 
@@ -365,6 +367,7 @@ namespace TrainingCalculator2
             if (m_isShowingFinalAnswer)
             {
                 m_isShowingFinalAnswer = false;
+                btnBackSpace.Enabled = true;
 
                 m_nextOperator = Operator.nothing;
                 m_calculateConstant = 0;
@@ -375,6 +378,7 @@ namespace TrainingCalculator2
                 lblInputField.Text = "";
                 m_isShowingAnswer = false;
                 btnPlusMinus.Enabled = true;
+                btnBackSpace.Enabled = true;
 
                 m_inputHistory += m_tempHistory;
                 m_tempHistory = null;
@@ -432,6 +436,7 @@ namespace TrainingCalculator2
             // デバッグ用
             m_isShowingAnswer = true;
             btnPlusMinus.Enabled = false;
+            btnBackSpace.Enabled = false;
             lblInputField.Text = m_answer.ToString();
 
             // 確定string
