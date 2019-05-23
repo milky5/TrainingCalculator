@@ -126,6 +126,7 @@
             // btnBackSpace
             // 
             this.btnBackSpace.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.btnBackSpace.Enabled = false;
             this.btnBackSpace.Location = new System.Drawing.Point(181, 115);
             this.btnBackSpace.Name = "btnBackSpace";
             this.btnBackSpace.Size = new System.Drawing.Size(79, 44);

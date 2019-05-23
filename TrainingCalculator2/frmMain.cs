@@ -10,14 +10,6 @@ using System.Windows.Forms;
 
 namespace TrainingCalculator2
 {
-    /// <summary>
-    /// 定数計算するために加減乗除いずれかの計算を保留しておく
-    /// </summary>
-    /// <param name="a"> 定数と計算する値 </param>
-    /// <returns> 計算結果 </returns>
-    /// 
-    //public delegate double Calculate(double a);
-
     public partial class frmMain : Form
     {
         #region メンバ変数
@@ -31,11 +23,7 @@ namespace TrainingCalculator2
         /// </summary>
         private bool m_beforeInputIsOperator;
         /// <summary>
-        /// 定数計算のための直前の四則演算は除算か
-        /// </summary>
-        private bool m_beforeInputSymbolIsDiv;
-        /// <summary>
-        /// 定数計算のために直前の数値を保持する
+        /// 定数計算の数値
         /// </summary>
         private double m_calculateConstant;
         /// <summary>
@@ -43,21 +31,21 @@ namespace TrainingCalculator2
         /// </summary>
         private string m_inputHistory;
         /// <summary>
+        /// 定数計算の演算子
+        /// </summary>
+        Operator m_nextOperator;
+        /// <summary>
         /// 計算の答えが表示中か
         /// </summary>
         private bool m_isShowingAnswer;
         /// <summary>
-        /// 定数計算のために直前の四則演算を保持する
+        /// = 後の答えが表示中か
         /// </summary>
-        //private Calculate m_nextCalculation;
+        bool m_isShowingFinalAnswer;
         /// <summary>
         /// 入力履歴(未確定部分)
         /// </summary>
         private string m_tempHistory;
-
-        bool m_isShowingFinalAnswer;
-
-        Operator m_nextOperator;
 
         #endregion
 
@@ -70,7 +58,6 @@ namespace TrainingCalculator2
         public frmMain()
         {
             InitializeComponent();
-
         }
 
         #region ボタンが押された際に呼ばれるメソッド
@@ -87,7 +74,6 @@ namespace TrainingCalculator2
             // 定数計算のために加算を保持する
             m_beforeInputIsOperator = true;
             m_nextOperator = Operator.add;
-            m_beforeInputSymbolIsDiv = false;
         }
 
         /// <summary>
@@ -152,7 +138,7 @@ namespace TrainingCalculator2
             }
 
             // 3パターン共通の処理 ([=]のあとに[=]押された時の処理と同一)
-            if (m_beforeInputSymbolIsDiv == true && m_calculateConstant == 0)
+            if (m_nextOperator == Operator.div && m_calculateConstant == 0)
             {
                 MessageBox.Show("0で割ることはできません");
                 return;
@@ -186,7 +172,6 @@ namespace TrainingCalculator2
             m_beforeInputIsOperator = false;
             m_calculateConstant = 0;
             m_nextOperator = Operator.nothing;
-            m_beforeInputSymbolIsDiv = false;
             m_inputHistory = null;
             m_tempHistory = null;
 
@@ -216,7 +201,6 @@ namespace TrainingCalculator2
             // 定数計算のために除算を保持する
             m_beforeInputIsOperator = true;
             m_nextOperator = Operator.div;
-            m_beforeInputSymbolIsDiv = true;
         }
 
         private void btnInputNumber_Click(object sender, EventArgs e)
@@ -235,9 +219,8 @@ namespace TrainingCalculator2
             else if (sender is Form)
             {
                 var _inputedKey = (KeyEventArgs)e;
-                var _key = _inputedKey.KeyCode;
-                var _result = _key.ToString();
-
+                var _keyNumberStr = _inputedKey.KeyCode.ToString().Remove(0, 1);
+                lblInputField.Text += _keyNumberStr;
             }
 
             if (lblInputField.Text == "0")
@@ -248,7 +231,7 @@ namespace TrainingCalculator2
             else
             {
                 btnPlusMinus.Enabled = true;
-                btnPlusMinus.Enabled = true;
+                btnBackSpace.Enabled = true;
             }
 
         }
@@ -266,7 +249,6 @@ namespace TrainingCalculator2
             // 定数計算のために乗算を保持する
             m_beforeInputIsOperator = true;
             m_nextOperator = Operator.multi;
-            m_beforeInputSymbolIsDiv = false;
         }
 
         /// <summary>
@@ -343,7 +325,6 @@ namespace TrainingCalculator2
             // 定数計算のために減算を保持する
             m_beforeInputIsOperator = true;
             m_nextOperator = Operator.sub;
-            m_beforeInputSymbolIsDiv = false;
         }
 
         #endregion
@@ -429,7 +410,6 @@ namespace TrainingCalculator2
             if (m_isShowingFinalAnswer == true)
             {
                 m_calculateConstant = 0;
-                m_beforeInputSymbolIsDiv = false;
                 m_answer = 0;
                 m_isShowingFinalAnswer = false;
                 m_nextOperator = Operator.nothing;
@@ -454,7 +434,7 @@ namespace TrainingCalculator2
             else
             {
                 // 保持されている四則演算を使って計算する
-                if (m_beforeInputSymbolIsDiv == true && m_calculateConstant == 0)
+                if (m_nextOperator == Operator.div && m_calculateConstant == 0)
                 {
                     MessageBox.Show("0で割ることはできません");
                     return;
