@@ -190,6 +190,11 @@ namespace TrainingCalculator2
             OperatorClick(Operator.Div);
         }
 
+        /// <summary>
+        /// 数字ボタンが押された際の共通イベントハンドラ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnInputNumber_Click(object sender, EventArgs e)
         {
             InputNumberCommon();
@@ -215,6 +220,33 @@ namespace TrainingCalculator2
             {
                 btnPlusMinus.Enabled = true;
                 btnBackSpace.Enabled = true;
+            }
+        }
+
+        /// <summary>
+        /// 演算子ボタンが押されたときの共通イベントハンドラ
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnInputOperator_Click(object sender, EventArgs e)
+        {
+            var _sender = (Button)sender;
+            switch (_sender.Text)
+            {
+                case "＋":
+                    OperatorClick(Operator.Add);
+                    break;
+                case "－":
+                    OperatorClick(Operator.Sub);
+                    break;
+                case "×":
+                    OperatorClick(Operator.Multi);
+                    break;
+                case "÷":
+                    OperatorClick(Operator.Div);
+                    break;
+                default:
+                    break;
             }
         }
 
