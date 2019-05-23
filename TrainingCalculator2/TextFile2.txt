@@ -10,10 +10,12 @@ BackSpace押しても意味ないときは無効化
 
 暫定答え直後の.　が0.暫定答えになってしまう問題
 
+〇
 object sender でまとめる
 Button _tmp = (Button)sender;
 _tmp.Text
 
+〇
 記号は stringや enumで保持し、変換しながら使う
 
 

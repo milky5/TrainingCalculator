@@ -15,7 +15,8 @@ namespace TrainingCalculator2
     /// </summary>
     /// <param name="a"> 定数と計算する値 </param>
     /// <returns> 計算結果 </returns>
-    public delegate double Calculate(double a);
+    /// 
+    //public delegate double Calculate(double a);
 
     public partial class frmMain : Form
     {
@@ -28,7 +29,7 @@ namespace TrainingCalculator2
         /// <summary>
         /// 直前の入力は演算子か
         /// </summary>
-        private bool m_beforeInputIsSymbol;
+        private bool m_beforeInputIsOperator;
         /// <summary>
         /// 定数計算のための直前の四則演算は除算か
         /// </summary>
@@ -48,13 +49,15 @@ namespace TrainingCalculator2
         /// <summary>
         /// 定数計算のために直前の四則演算を保持する
         /// </summary>
-        private Calculate m_nextCalculation;
+        //private Calculate m_nextCalculation;
         /// <summary>
         /// 入力履歴(未確定部分)
         /// </summary>
         private string m_tempHistory;
 
         bool m_isShowingFinalAnswer;
+
+        Operator m_nextOperator;
 
         #endregion
 
@@ -79,11 +82,11 @@ namespace TrainingCalculator2
         /// <param name="e"></param>
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            OperatorClick("+");
+            OperatorClick(Operator.add);
 
             // 定数計算のために加算を保持する
-            m_beforeInputIsSymbol = true;
-            m_nextCalculation = ((double a) => a + m_calculateConstant);
+            m_beforeInputIsOperator = true;
+            m_nextOperator = Operator.add;
             m_beforeInputSymbolIsDiv = false;
         }
 
@@ -125,18 +128,23 @@ namespace TrainingCalculator2
             // (履歴が消える・数字が残る)
 
             // [演算子][=]連続で押された時の処理
-            if (m_beforeInputIsSymbol == true && m_isShowingAnswer == true)
+            if (m_beforeInputIsOperator == true && m_isShowingAnswer == true)
             {
-                m_beforeInputIsSymbol = false;
+                m_beforeInputIsOperator = false;
 
                 // answerを定数計算のために保持する
                 m_calculateConstant = m_answer;
             }
             // 数字の後に[=]押された時の処理
-            else if (m_beforeInputIsSymbol == false && m_isShowingAnswer == false)
+            else if (m_beforeInputIsOperator == false && m_isShowingAnswer == false)
             {
                 // 入力値を定数計算のために保持する
                 m_calculateConstant = double.Parse(lblInputField.Text);
+            }
+            // [CE]の後に[=]押されたときの処理
+            else if (m_beforeInputIsOperator == false && m_isShowingAnswer == true)
+            {
+                m_answer = double.Parse(lblInputField.Text);
             }
 
             // 3パターン共通の処理 ([=]のあとに[=]押された時の処理と同一)
@@ -145,7 +153,7 @@ namespace TrainingCalculator2
                 MessageBox.Show("0で割ることはできません");
                 return;
             }
-            m_answer = m_nextCalculation(m_answer);
+            m_answer = Calculate(m_nextOperator);
 
             m_isShowingAnswer = true;
             m_isShowingFinalAnswer = true;
@@ -155,7 +163,7 @@ namespace TrainingCalculator2
             m_tempHistory = null;
             lblInputHistory.Text = "";
 
-            m_beforeInputIsSymbol = false;
+            m_beforeInputIsOperator = false;
         }
 
         /// <summary>
@@ -170,9 +178,9 @@ namespace TrainingCalculator2
             lblInputHistory.Text = "";
             m_answer = 0;
             m_isShowingAnswer = false;
-            m_beforeInputIsSymbol = false;
+            m_beforeInputIsOperator = false;
             m_calculateConstant = 0;
-            m_nextCalculation = null;
+            m_nextOperator = Operator.nothing;
             m_beforeInputSymbolIsDiv = false;
             m_inputHistory = null;
             m_tempHistory = null;
@@ -186,6 +194,8 @@ namespace TrainingCalculator2
         private void btnClearEntry_Click(object sender, EventArgs e)
         {
             lblInputField.Text = "0";
+            //m_beforeInputIsOperator = false;
+            //m_isShowingAnswer = false;
         }
 
         /// <summary>
@@ -195,15 +205,15 @@ namespace TrainingCalculator2
         /// <param name="e"></param>
         private void btnDiv_Click(object sender, EventArgs e)
         {
-            OperatorClick("÷");
+            OperatorClick(Operator.div);
 
             // 定数計算のために除算を保持する
-            m_beforeInputIsSymbol = true;
-            m_nextCalculation = ((double a) => a / m_calculateConstant);
+            m_beforeInputIsOperator = true;
+            m_nextOperator = Operator.div;
             m_beforeInputSymbolIsDiv = true;
         }
 
-        private void btnInputNumber_Click(object sender ,EventArgs e)
+        private void btnInputNumber_Click(object sender, EventArgs e)
         {
             InputNumberCommon();
 
@@ -224,8 +234,8 @@ namespace TrainingCalculator2
 
             }
 
-            
-            
+
+
         }
 
         /// <summary>
@@ -235,11 +245,12 @@ namespace TrainingCalculator2
         /// <param name="e"></param>
         private void btnMulti_Click(object sender, EventArgs e)
         {
-            OperatorClick("×");
+            OperatorClick(Operator.multi);
+
 
             // 定数計算のために乗算を保持する
-            m_beforeInputIsSymbol = true;
-            m_nextCalculation = ((double a) => a * m_calculateConstant);
+            m_beforeInputIsOperator = true;
+            m_nextOperator = Operator.multi;
             m_beforeInputSymbolIsDiv = false;
         }
 
@@ -299,11 +310,13 @@ namespace TrainingCalculator2
         /// <param name="e"></param>
         private void btnSub_Click(object sender, EventArgs e)
         {
-            OperatorClick("-");
+
+            OperatorClick(Operator.sub);
+
 
             // 定数計算のために減算を保持する
-            m_beforeInputIsSymbol = true;
-            m_nextCalculation = ((double a) => a - m_calculateConstant);
+            m_beforeInputIsOperator = true;
+            m_nextOperator = Operator.sub;
             m_beforeInputSymbolIsDiv = false;
         }
 
@@ -353,7 +366,7 @@ namespace TrainingCalculator2
             {
                 m_isShowingFinalAnswer = false;
 
-                m_nextCalculation = null;
+                m_nextOperator = Operator.nothing;
                 m_calculateConstant = 0;
             }
 
@@ -371,17 +384,17 @@ namespace TrainingCalculator2
                 lblInputField.Text = "";
             }
 
-            m_beforeInputIsSymbol = false;
+            m_beforeInputIsOperator = false;
         }
 
         /// <summary>
         /// 保留された演算を実行し、結果をラベルに表示する
         /// </summary>
-        void OperatorClick(string symbol)
+        private void OperatorClick(Operator inputedOperator)
         {
-            if (m_beforeInputIsSymbol == true)
+            if (m_beforeInputIsOperator == true)
             {
-                m_tempHistory = $" {symbol} ";
+                m_tempHistory = GetOperatorStr(inputedOperator);
                 lblInputHistory.Text = m_inputHistory + m_tempHistory;
                 return;
             }
@@ -389,20 +402,21 @@ namespace TrainingCalculator2
             if (m_isShowingFinalAnswer == true)
             {
                 m_calculateConstant = 0;
-                m_nextCalculation = null;
                 m_beforeInputSymbolIsDiv = false;
                 m_answer = 0;
                 m_isShowingFinalAnswer = false;
+                m_nextOperator = Operator.nothing;
             }
 
 
             m_calculateConstant = double.Parse(lblInputField.Text);
 
             // 保持されている四則演算がなければ
-            if (m_nextCalculation == null)
+            if (m_nextOperator == Operator.nothing)
             {
                 // 今回の入力値を答えとする
                 m_answer = m_calculateConstant;
+
             }
             // 保持されている四則演算があれば
             else
@@ -413,7 +427,7 @@ namespace TrainingCalculator2
                     MessageBox.Show("0で割ることはできません");
                     return;
                 }
-                m_answer = m_nextCalculation(m_answer);
+                m_answer = Calculate(m_nextOperator);
             }
             // デバッグ用
             m_isShowingAnswer = true;
@@ -422,11 +436,64 @@ namespace TrainingCalculator2
 
             // 確定string
             m_inputHistory += m_calculateConstant.ToString();
-            m_tempHistory = $" {symbol} ";
+            m_tempHistory = GetOperatorStr(inputedOperator);
             lblInputHistory.Text = m_inputHistory + m_tempHistory;
         }
 
+
+
+
+        private double Calculate(Operator inputedOperator)
+        {
+            switch (inputedOperator)
+            {
+                case Operator.nothing:
+                    break;
+                case Operator.add:
+                    return m_answer + m_calculateConstant;
+                case Operator.sub:
+                    return m_answer - m_calculateConstant;
+                case Operator.multi:
+                    return m_answer * m_calculateConstant;
+                case Operator.div:
+                    return m_answer / m_calculateConstant;
+                default:
+                    break;
+            }
+
+            return 0;
+        }
+
+        private string GetOperatorStr(Operator inputedOperator)
+        {
+            switch (inputedOperator)
+            {
+                case Operator.nothing:
+                    return null;
+                case Operator.add:
+                    return "＋";
+                case Operator.sub:
+                    return "－";
+                case Operator.multi:
+                    return "×";
+                case Operator.div:
+                    return "÷";
+                default:
+                    return null;
+            }
+        }
+
+
         #endregion
 
+    }
+
+    enum Operator
+    {
+        nothing,
+        add,
+        sub,
+        multi,
+        div
     }
 }
