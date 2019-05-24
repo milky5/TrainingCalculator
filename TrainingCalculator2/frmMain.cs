@@ -28,7 +28,7 @@ namespace TrainingCalculator2
         /// </summary>
         private bool m_isShowingFinalAnswer;
 
-        clsProcess process;
+        clsCalculateManager calcManager;
 
         #endregion
 
@@ -42,7 +42,7 @@ namespace TrainingCalculator2
         {
             InitializeComponent();
 
-            process = new clsProcess();
+            calcManager = new clsCalculateManager();
         }
 
         /// <summary>
@@ -84,35 +84,35 @@ namespace TrainingCalculator2
             if (m_beforeInputIsOperator == true && m_isShowingAnswer == true)
             {
                 m_beforeInputIsOperator = false;
-                process.AnswerToConstant();
+                calcManager.AnswerToConstant();
             }
             // 数字の後に[=]を押された時の処理
             else if (m_beforeInputIsOperator == false
                     && m_isShowingAnswer == false)
             {
-                process.IntoConstant(double.Parse(lblInputField.Text));
+                calcManager.IntoConstant(double.Parse(lblInputField.Text));
             }
             // [CE]の後に[=]押されたときの処理
             else if (m_beforeInputIsOperator == false && m_isShowingAnswer == true)
             {
-                process.IntoAnswer(double.Parse(lblInputField.Text));
+                calcManager.IntoAnswer(double.Parse(lblInputField.Text));
             }
 
             // 以下、共通の処理 ([=]のあとに[=]押された時の処理と同一)
 
-            if (process.WillDiv0())
+            if (calcManager.WillDiv0() == true)
             {
                 MessageBox.Show("0で割ることはできません");
                 return;
             }
 
-            process.DoCalculate();
+            calcManager.DoCalculate();
 
             m_isShowingAnswer = true;
             m_isShowingFinalAnswer = true;
             m_beforeInputIsOperator = false;
 
-            lblInputField.Text = process.GetAnswer().ToString();
+            lblInputField.Text = calcManager.GetAnswer().ToString();
             lblInputHistory.Text = "";
 
             btnPlusMinus.Enabled = true;
@@ -129,7 +129,7 @@ namespace TrainingCalculator2
             m_isShowingAnswer = false;
             m_beforeInputIsOperator = false;
 
-            process.Reset();
+            calcManager.Reset();
 
             lblInputField.Text = "0";
             lblInputHistory.Text = "";
@@ -324,7 +324,7 @@ namespace TrainingCalculator2
             if (m_isShowingFinalAnswer)
             {
                 m_isShowingFinalAnswer = false;
-                process.Reset2();
+                calcManager.Reset2();
             }
 
             if (m_isShowingAnswer)
@@ -332,7 +332,7 @@ namespace TrainingCalculator2
                 lblInputField.Text = "";
                 m_isShowingAnswer = false;
 
-                process.EnterTempHistory();
+                calcManager.EnterTempHistory();
             }
             if (lblInputField.Text == "0")
             {
@@ -349,43 +349,45 @@ namespace TrainingCalculator2
         {
             if (m_beforeInputIsOperator == true)
             {
-                process.IntoTempHistory(GetOperatorStr(inputedOperator));
-                lblInputHistory.Text = process.GetHistoryStr();
+                calcManager.IntoNextOperator(inputedOperator);
+
+                calcManager.IntoTempHistory(GetOperatorStr(inputedOperator));
+                lblInputHistory.Text = calcManager.GetHistoryStr();
                 return;
             }
 
             if (m_isShowingFinalAnswer == true)
             {
-                process.Reset3();
+                calcManager.Reset3();
 
                 m_isShowingFinalAnswer = false;
             }
 
             if (m_isShowingAnswer == true)
             {
-                process.EnterTempHistory();
+                calcManager.EnterTempHistory();
             }
 
-            process.IntoConstant(double.Parse(lblInputField.Text));
+            calcManager.IntoConstant(double.Parse(lblInputField.Text));
 
             // 保持されている四則演算がなければ
-            if (process.NextOperatorIsDiv())
+            if (calcManager.HasNextOperator() == false)
             {
                 // 今回の入力値を答えとする
-                process.ConstantToAnswer();
+                calcManager.ConstantToAnswer();
 
             }
             // 保持されている四則演算があれば
             else
             {
-                if (process.WillDiv0())
+                if (calcManager.WillDiv0() == true)
                 {
                     MessageBox.Show("0で割ることはできません");
                     return;
                 }
                 else
                 {
-                    process.DoCalculate2();
+                    calcManager.DoCalculate2();
                 }
             }
 
@@ -393,12 +395,12 @@ namespace TrainingCalculator2
             m_isShowingAnswer = true;
             m_beforeInputIsOperator = true;
 
-            process.IntoNextOperator(inputedOperator);
+            calcManager.IntoNextOperator(inputedOperator);
 
-            lblInputField.Text = process.GetAnswer().ToString();
-            process.CalculateConstantToInputHistory();
-            process.IntoTempHistory(GetOperatorStr(inputedOperator));
-            lblInputHistory.Text = process.GetHistoryStr();
+            lblInputField.Text = calcManager.GetAnswer().ToString();
+            calcManager.CalculateConstantToInputHistory();
+            calcManager.IntoTempHistory(GetOperatorStr(inputedOperator));
+            lblInputHistory.Text = calcManager.GetHistoryStr();
 
             btnPlusMinus.Enabled = true;
             btnBackSpace.Enabled = false;
