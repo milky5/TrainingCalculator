@@ -90,7 +90,7 @@ namespace TrainingCalculator2
             else if (m_beforeInputIsOperator == false
                     && m_isShowingAnswer == false)
             {
-                calcManager.IntoConstant(double.Parse(lblInputField.Text));
+                calcManager.CalculateConstant = double.Parse(lblInputField.Text);
             }
             // [CE]の後に[=]押されたときの処理
             else if (m_beforeInputIsOperator == false && m_isShowingAnswer == true)
@@ -112,7 +112,7 @@ namespace TrainingCalculator2
             m_isShowingFinalAnswer = true;
             m_beforeInputIsOperator = false;
 
-            lblInputField.Text = calcManager.GetAnswer().ToString();
+            lblInputField.Text = calcManager.Answer.ToString();
             lblInputHistory.Text = "";
 
             btnPlusMinus.Enabled = true;
@@ -349,10 +349,10 @@ namespace TrainingCalculator2
         {
             if (m_beforeInputIsOperator == true)
             {
-                calcManager.IntoNextOperator(inputedOperator);
+                calcManager.NextOperator = inputedOperator;
 
                 calcManager.IntoTempHistory(GetOperatorStr(inputedOperator));
-                lblInputHistory.Text = calcManager.GetHistoryStr();
+                lblInputHistory.Text = calcManager.History;
                 return;
             }
 
@@ -368,7 +368,7 @@ namespace TrainingCalculator2
                 calcManager.EnterTempHistory();
             }
 
-            calcManager.IntoConstant(double.Parse(lblInputField.Text));
+            calcManager.CalculateConstant = double.Parse(lblInputField.Text);
 
             // 保持されている四則演算がなければ
             if (calcManager.HasNextOperator() == false)
@@ -395,12 +395,12 @@ namespace TrainingCalculator2
             m_isShowingAnswer = true;
             m_beforeInputIsOperator = true;
 
-            calcManager.IntoNextOperator(inputedOperator);
+            calcManager.NextOperator = inputedOperator;
 
-            lblInputField.Text = calcManager.GetAnswer().ToString();
+            lblInputField.Text = calcManager.Answer.ToString();
             calcManager.CalculateConstantToInputHistory();
             calcManager.IntoTempHistory(GetOperatorStr(inputedOperator));
-            lblInputHistory.Text = calcManager.GetHistoryStr();
+            lblInputHistory.Text = calcManager.History;
 
             btnPlusMinus.Enabled = true;
             btnBackSpace.Enabled = false;

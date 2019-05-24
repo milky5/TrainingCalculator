@@ -8,29 +8,14 @@ namespace TrainingCalculator2
 {
     class clsCalculateManager
     {
-
-        /// <summary>
-        /// 計算の答え
-        /// </summary>
-        private double m_answer;
-        /// <summary>
-        /// 定数計算の数値
-        /// </summary>
-        private double m_calculateConstant;
         /// <summary>
         /// 入力履歴(確定部分)
         /// </summary>
         private string m_inputHistory;
         /// <summary>
-        /// 定数計算の演算子
-        /// </summary>
-        Operator m_nextOperator;
-        /// <summary>
         /// 入力履歴(未確定部分)
         /// </summary>
         private string m_tempHistory;
-
-
 
         /// <summary>
         /// 演算子を基に定数計算を実行する
@@ -42,13 +27,13 @@ namespace TrainingCalculator2
             switch (useOperator)
             {
                 case Operator.Add:
-                    return m_answer + m_calculateConstant;
+                    return Answer + CalculateConstant;
                 case Operator.Sub:
-                    return m_answer - m_calculateConstant;
+                    return Answer - CalculateConstant;
                 case Operator.Multi:
-                    return m_answer * m_calculateConstant;
+                    return Answer * CalculateConstant;
                 case Operator.Div:
-                    return m_answer / m_calculateConstant;
+                    return Answer / CalculateConstant;
                 case Operator.Nothing:
                 default:
                     break;
@@ -62,7 +47,7 @@ namespace TrainingCalculator2
         /// </summary>
         public void AnswerToConstant()
         {
-            m_calculateConstant = m_answer;
+            CalculateConstant = Answer;
         }
         /// <summary>
         /// 現在の定数を答えに代入する
@@ -70,16 +55,7 @@ namespace TrainingCalculator2
         /// </summary>
         public void ConstantToAnswer()
         {
-            m_answer = m_calculateConstant;
-        }
-        /// <summary>
-        /// 入力された値を定数に代入する
-        /// (数字入力直後に演算子や＝が押され、数字が確定した時の処理)
-        /// </summary>
-        /// <param name="inputNumber"></param>
-        public void IntoConstant(double inputNumber)
-        {
-            m_calculateConstant = inputNumber;
+            Answer = CalculateConstant;
         }
         /// <summary>
         /// 定数計算の数値部分は残したまま、暫定答えだけ0にする
@@ -88,7 +64,7 @@ namespace TrainingCalculator2
         /// <param name="inputNumber"></param>
         public void IntoAnswer(double inputNumber)
         {
-            m_answer = inputNumber;
+            Answer = inputNumber;
         }
         /// <summary>
         /// 最終答えを計算する際の処理
@@ -96,7 +72,7 @@ namespace TrainingCalculator2
         /// </summary>
         public void DoCalculate()
         {
-            m_answer = Calculate(m_nextOperator);
+            Answer = Calculate(NextOperator);
             m_inputHistory = "";
             m_tempHistory = "";
         }
@@ -106,26 +82,17 @@ namespace TrainingCalculator2
         /// </summary>
         public void DoCalculate2()
         {
-            m_answer = Calculate(m_nextOperator);
+            Answer = Calculate(NextOperator);
         }
-        /// <summary>
-        /// 現在の答えを返すメソッド（プロパティでいい）
-        /// </summary>
-        /// <returns> 現在の答え </returns>
-        public double GetAnswer()
-        {
-            return m_answer;
-        }
-
         /// <summary>
         /// 計算に使う値を初期化する
         /// ([C]が押されたときの処理)
         /// </summary>
         public void Reset()
         {
-            m_answer = 0;
-            m_calculateConstant = 0;
-            m_nextOperator = Operator.Nothing;
+            Answer = 0;
+            CalculateConstant = 0;
+            NextOperator = Operator.Nothing;
             m_inputHistory = "";
             m_tempHistory = "";
         }
@@ -135,8 +102,8 @@ namespace TrainingCalculator2
         /// </summary>
         public void Reset2()
         {
-            m_nextOperator = Operator.Nothing;
-            m_calculateConstant = 0;
+            NextOperator = Operator.Nothing;
+            CalculateConstant = 0;
         }
         /// <summary>
         /// 未確定部分の入力履歴を確定し、未確定部分の入力履歴を初期化する
@@ -158,30 +125,14 @@ namespace TrainingCalculator2
             m_tempHistory = str;
         }
         /// <summary>
-        /// 現在の入力履歴(確定部分+未確定部分)を返すメソッド（プロパティでもよい）
-        /// </summary>
-        /// <returns></returns>
-        public string GetHistoryStr()
-        {
-            return m_inputHistory + m_tempHistory;
-        }
-        /// <summary>
         /// 計算に使う値を初期化する
         /// (最終答え表示中に演算子が押されたとき(新しい計算が始まるとき)の処理)
         /// </summary>
         public void Reset3()
         {
-            m_calculateConstant = 0;
-            m_answer = 0;
-            m_nextOperator = Operator.Nothing;
-        }
-        /// <summary>
-        /// 次に使用する演算子をセットする（プロパティでいい）
-        /// </summary>
-        /// <param name="inputedOperator"></param>
-        public void IntoNextOperator(Operator inputedOperator)
-        {
-            m_nextOperator = inputedOperator;
+            CalculateConstant = 0;
+            Answer = 0;
+            NextOperator = Operator.Nothing;
         }
         /// <summary>
         /// 数字部分が確定した際、数字部分を履歴に入力する
@@ -189,7 +140,7 @@ namespace TrainingCalculator2
         /// </summary>
         public void CalculateConstantToInputHistory()
         {
-            m_inputHistory += m_calculateConstant.ToString();
+            m_inputHistory += CalculateConstant.ToString();
         }
         /// <summary>
         /// 次の計算が0除算かどうか
@@ -197,7 +148,7 @@ namespace TrainingCalculator2
         /// <returns> 0除算 true, 0除算でない false </returns>
         public bool WillDiv0()
         {
-            if (m_nextOperator == Operator.Div && m_calculateConstant == 0)
+            if (NextOperator == Operator.Div && CalculateConstant == 0)
             {
                 return true;
             }
@@ -209,11 +160,39 @@ namespace TrainingCalculator2
         /// <returns> 保持している true, 保持していない false </returns>
         public bool HasNextOperator()
         {
-            if (m_nextOperator == Operator.Nothing)
+            if (NextOperator == Operator.Nothing)
             {
                 return false;
             }
             return true;
         }
+
+
+
+
+
+        /// <summary>
+        /// 計算の答え
+        /// </summary>
+        public double Answer { get; private set; }
+        /// <summary>
+        /// 定数計算の数値
+        /// </summary>
+        public double CalculateConstant { private get; set; }
+        /// <summary>
+        /// 入力履歴
+        /// </summary>
+        public string History
+        {
+            get
+            {
+                return m_inputHistory + m_tempHistory;
+            }
+        }
+        /// <summary>
+        /// 定数計算の演算子
+        /// </summary>
+        public Operator NextOperator { private get; set; }
+
     }
 }
