@@ -8,6 +8,7 @@ namespace TrainingCalculator2
 {
     class clsCalculateManager
     {
+        #region メンバ変数
         /// <summary>
         /// 入力履歴(確定部分)
         /// </summary>
@@ -16,144 +17,86 @@ namespace TrainingCalculator2
         /// 入力履歴(未確定部分)
         /// </summary>
         private string m_tempHistory;
+        #endregion
+
+
+        #region メンバメソッド
 
         /// <summary>
-        /// 演算子を基に定数計算を実行する
+        /// 現在の答えを定数に代入する
         /// </summary>
-        /// <param name="useOperator"> 使用する演算子の種類 </param>
-        /// <returns> 計算結果 </returns>
-        public double Calculate(Operator useOperator)
+        public void AssignAnswerToConstant()
         {
-            switch (useOperator)
+            CalculateConstant = Answer;
+        }
+
+        /// <summary>
+        /// 確定した数字部分を履歴に入力する
+        /// </summary>
+        public void AssignCalculateConstantToInputHistory()
+        {
+            m_inputHistory += CalculateConstant.ToString();
+        }
+
+        /// <summary>
+        /// 現在の定数を答えに代入する
+        /// </summary>
+        public void AssignConstantToAnswer()
+        {
+            Answer = CalculateConstant;
+        }
+
+        /// <summary>
+        /// 未確定の演算子を入力履歴に代入する
+        /// </summary>
+        /// <param name="operatorStr"> 文字列型の演算子 </param>
+        public void AssignTempHistory(string operatorStr)
+        {
+            m_tempHistory = operatorStr;
+        }
+
+        /// <summary>
+        /// 答えに入力値を代入する
+        /// </summary>
+        public void AssignToAnswer(double inputNumber)
+        {
+            Answer = inputNumber;
+        }
+
+        /// <summary>
+        /// 定数計算を実行し、答えに代入する
+        /// </summary>
+        public void Calculate()
+        {
+            switch (NextOperator)
             {
                 case Operator.Add:
-                    return Answer + CalculateConstant;
+                     Answer += CalculateConstant;
+                    break;
                 case Operator.Sub:
-                    return Answer - CalculateConstant;
+                    Answer -= CalculateConstant;
+                    break;
                 case Operator.Multi:
-                    return Answer * CalculateConstant;
+                    Answer *= CalculateConstant;
+                    break;
                 case Operator.Div:
-                    return Answer / CalculateConstant;
+                    Answer /= CalculateConstant;
+                    break;
                 case Operator.Nothing:
                 default:
                     break;
             }
+        }
 
-            return 0;
-        }
         /// <summary>
-        /// 現在の答えを定数に代入する
-        /// （[演算子][＝]連続で押されたときの処理）
-        /// </summary>
-        public void AnswerToConstant()
-        {
-            CalculateConstant = Answer;
-        }
-        /// <summary>
-        /// 現在の定数を答えに代入する
-        /// (計算の最初の数字が入力され、それがそのまま暫定答えになるときの処理)
-        /// </summary>
-        public void ConstantToAnswer()
-        {
-            Answer = CalculateConstant;
-        }
-        /// <summary>
-        /// 定数計算の数値部分は残したまま、暫定答えだけ0にする
-        /// ([CE]の後に[=]が押されたときの処理)
-        /// </summary>
-        /// <param name="inputNumber"></param>
-        public void IntoAnswer(double inputNumber)
-        {
-            Answer = inputNumber;
-        }
-        /// <summary>
-        /// 最終答えを計算する際の処理
-        /// (＝ボタンが押されたときの処理)
-        /// </summary>
-        public void DoCalculate()
-        {
-            Answer = Calculate(NextOperator);
-            m_inputHistory = "";
-            m_tempHistory = "";
-        }
-        /// <summary>
-        /// 暫定答えを計算する際の処理
-        /// (演算子ボタンが2回目以降に押されたとき(計算ができるとき)の処理)
-        /// </summary>
-        public void DoCalculate2()
-        {
-            Answer = Calculate(NextOperator);
-        }
-        /// <summary>
-        /// 計算に使う値を初期化する
-        /// ([C]が押されたときの処理)
-        /// </summary>
-        public void Reset()
-        {
-            Answer = 0;
-            CalculateConstant = 0;
-            NextOperator = Operator.Nothing;
-            m_inputHistory = "";
-            m_tempHistory = "";
-        }
-        /// <summary>
-        /// 計算に使う値を初期化する
-        /// (最終答え表示中に数字が押されたとき(新しい計算が始まるとき)の処理)
-        /// </summary>
-        public void Reset2()
-        {
-            NextOperator = Operator.Nothing;
-            CalculateConstant = 0;
-        }
-        /// <summary>
-        /// 未確定部分の入力履歴を確定し、未確定部分の入力履歴を初期化する
-        /// (暫定答え表示中に[演算子]もしくは[数字]が押されたときの処理)
+        /// 入力履歴の未確定部分を確定する
         /// </summary>
         public void EnterTempHistory()
         {
             m_inputHistory += m_tempHistory;
             m_tempHistory = "";
         }
-        /// <summary>
-        /// 未確定の演算子を入力履歴に表示する
-        /// (演算子直後に演算子を入力された際、入力された演算子を未確定とする
-        /// 数字の後に演算子が押された際に、演算子を未確定とする)
-        /// </summary>
-        /// <param name="str"> 文字列型の演算子 </param>
-        public void IntoTempHistory(string str)
-        {
-            m_tempHistory = str;
-        }
-        /// <summary>
-        /// 計算に使う値を初期化する
-        /// (最終答え表示中に演算子が押されたとき(新しい計算が始まるとき)の処理)
-        /// </summary>
-        public void Reset3()
-        {
-            CalculateConstant = 0;
-            Answer = 0;
-            NextOperator = Operator.Nothing;
-        }
-        /// <summary>
-        /// 数字部分が確定した際、数字部分を履歴に入力する
-        /// (演算子が押された際の処理)
-        /// </summary>
-        public void CalculateConstantToInputHistory()
-        {
-            m_inputHistory += CalculateConstant.ToString();
-        }
-        /// <summary>
-        /// 次の計算が0除算かどうか
-        /// </summary>
-        /// <returns> 0除算 true, 0除算でない false </returns>
-        public bool WillDiv0()
-        {
-            if (NextOperator == Operator.Div && CalculateConstant == 0)
-            {
-                return true;
-            }
-            return false;
-        }
+
         /// <summary>
         /// 次の演算子を保持しているか
         /// </summary>
@@ -167,10 +110,48 @@ namespace TrainingCalculator2
             return true;
         }
 
+        /// <summary>
+        /// 次の計算が0除算かどうか
+        /// </summary>
+        /// <returns> 0除算 true, 0除算でない false </returns>
+        public bool NextCalculationIsDiv0()
+        {
+            if (NextOperator == Operator.Div && CalculateConstant == 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 履歴の値を初期化する
+        /// </summary>
+        public void ResetHistory()
+        {
+            m_inputHistory = "";
+            m_tempHistory = "";
+        }
+        /// <summary>
+        /// 計算に使う値を初期化する
+        /// </summary>
+        public void ResetValue()
+        {
+            Answer = 0;
+            CalculateConstant = 0;
+            NextOperator = Operator.Nothing;
+            m_inputHistory = "";
+            m_tempHistory = "";
+        }
 
 
 
 
+
+
+        #endregion
+
+
+        #region プロパティ
         /// <summary>
         /// 計算の答え
         /// </summary>
@@ -178,7 +159,7 @@ namespace TrainingCalculator2
         /// <summary>
         /// 定数計算の数値
         /// </summary>
-        public double CalculateConstant { private get; set; }
+        public double CalculateConstant { get; set; }
         /// <summary>
         /// 入力履歴
         /// </summary>
@@ -192,7 +173,8 @@ namespace TrainingCalculator2
         /// <summary>
         /// 定数計算の演算子
         /// </summary>
-        public Operator NextOperator { private get; set; }
+        public Operator NextOperator { get; set; }
 
+        #endregion
     }
 }

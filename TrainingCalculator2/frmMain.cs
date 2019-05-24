@@ -14,7 +14,6 @@ namespace TrainingCalculator2
     {
         #region メンバ変数
 
-
         /// <summary>
         /// 直前の入力は演算子か
         /// </summary>
@@ -27,8 +26,14 @@ namespace TrainingCalculator2
         /// 計算終了後の答えが表示中か
         /// </summary>
         private bool m_isShowingFinalAnswer;
-
-        clsCalculateManager calcManager;
+        /// <summary>
+        /// 計算の実行をするクラスのインスタンス
+        /// </summary>
+        clsCalculateManager m_calcManager;
+        /// <summary>
+        /// 直前の入力は±か
+        /// </summary>
+        private bool m_beforeInputIsPlusMinus;
 
         #endregion
 
@@ -42,7 +47,7 @@ namespace TrainingCalculator2
         {
             InitializeComponent();
 
-            calcManager = new clsCalculateManager();
+            m_calcManager = new clsCalculateManager();
         }
 
         /// <summary>
@@ -84,35 +89,41 @@ namespace TrainingCalculator2
             if (m_beforeInputIsOperator == true && m_isShowingAnswer == true)
             {
                 m_beforeInputIsOperator = false;
-                calcManager.AnswerToConstant();
+                m_calcManager.AssignAnswerToConstant();
             }
             // 数字の後に[=]を押された時の処理
             else if (m_beforeInputIsOperator == false
                     && m_isShowingAnswer == false)
             {
-                calcManager.CalculateConstant = double.Parse(lblInputField.Text);
+                m_calcManager.CalculateConstant = double.Parse(lblInputField.Text);
             }
-            // [CE]の後に[=]押されたときの処理
+            else if (m_beforeInputIsPlusMinus == true)
+            {
+                m_calcManager.CalculateConstant = double.Parse(lblInputField.Text);
+                m_beforeInputIsPlusMinus = false;
+            }
+            // [CE]の後に[=]押された時と、[=]のあとに[=]押された時の処理
             else if (m_beforeInputIsOperator == false && m_isShowingAnswer == true)
             {
-                calcManager.IntoAnswer(double.Parse(lblInputField.Text));
+                m_calcManager.AssignToAnswer(double.Parse(lblInputField.Text));
             }
 
-            // 以下、共通の処理 ([=]のあとに[=]押された時の処理と同一)
+            // 以下、共通の処理
 
-            if (calcManager.WillDiv0() == true)
+            if (m_calcManager.NextCalculationIsDiv0() == true)
             {
                 MessageBox.Show("0で割ることはできません");
                 return;
             }
 
-            calcManager.DoCalculate();
+            m_calcManager.Calculate();
+            m_calcManager.ResetHistory();
 
             m_isShowingAnswer = true;
             m_isShowingFinalAnswer = true;
             m_beforeInputIsOperator = false;
 
-            lblInputField.Text = calcManager.Answer.ToString();
+            lblInputField.Text = m_calcManager.Answer.ToString();
             lblInputHistory.Text = "";
 
             btnPlusMinus.Enabled = true;
@@ -128,8 +139,9 @@ namespace TrainingCalculator2
         {
             m_isShowingAnswer = false;
             m_beforeInputIsOperator = false;
+            m_beforeInputIsPlusMinus = false;
 
-            calcManager.Reset();
+            m_calcManager.ResetValue();
 
             lblInputField.Text = "0";
             lblInputHistory.Text = "";
@@ -144,6 +156,7 @@ namespace TrainingCalculator2
         /// <param name="e"></param>
         private void btnClearEntry_Click(object sender, EventArgs e)
         {
+            m_beforeInputIsPlusMinus = false;
             btnPlusMinus.Enabled = false;
 
             lblInputField.Text = "0";
@@ -183,7 +196,7 @@ namespace TrainingCalculator2
         }
 
         /// <summary>
-        /// 演算子ボタンが押されたときの共通イベントハンドラ
+        /// 演算子ボタンが押された際の共通イベントハンドラ
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -241,7 +254,7 @@ namespace TrainingCalculator2
         }
 
         /// <summary>
-        /// 正数負数の切り替えをする
+        /// [±]ボタンが押された際の処理
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -253,9 +266,26 @@ namespace TrainingCalculator2
             }
 
             ControlPlusMinus();
+
+            m_beforeInputIsPlusMinus = true;
         }
 
+        /// <summary>
+        ///  表示されている数字の正負を切り替える
+        /// </summary>
+        private void ControlPlusMinus()
+        {
+            // 入力値に[-]が含まれていたら、[-]を入力値から取り除く
+            if (lblInputField.Text.Contains("-") == true)
+            {
+                var index = lblInputField.Text.IndexOf("-");
+                lblInputField.Text = lblInputField.Text.Remove(index, 1);
+                return;
+            }
 
+            // 入力値に[-]が含まれていなければ、先頭に[-]を挿入する
+            lblInputField.Text = ("-" + lblInputField.Text);
+        }
 
         /// <summary>
         /// キーボード入力イベントを受けとり、適切なメソッドに割り振る
@@ -324,7 +354,7 @@ namespace TrainingCalculator2
             if (m_isShowingFinalAnswer)
             {
                 m_isShowingFinalAnswer = false;
-                calcManager.Reset2();
+                m_calcManager.ResetValue();
             }
 
             if (m_isShowingAnswer)
@@ -332,7 +362,7 @@ namespace TrainingCalculator2
                 lblInputField.Text = "";
                 m_isShowingAnswer = false;
 
-                calcManager.EnterTempHistory();
+                m_calcManager.EnterTempHistory();
             }
             if (lblInputField.Text == "0")
             {
@@ -340,6 +370,7 @@ namespace TrainingCalculator2
             }
 
             m_beforeInputIsOperator = false;
+            m_beforeInputIsPlusMinus = false;
         }
 
         /// <summary>
@@ -347,47 +378,49 @@ namespace TrainingCalculator2
         /// </summary>
         private void OperatorClick(Operator inputedOperator)
         {
+            m_beforeInputIsPlusMinus = false;
+
             if (m_beforeInputIsOperator == true)
             {
-                calcManager.NextOperator = inputedOperator;
+                m_calcManager.NextOperator = inputedOperator;
 
-                calcManager.IntoTempHistory(GetOperatorStr(inputedOperator));
-                lblInputHistory.Text = calcManager.History;
+                m_calcManager.AssignTempHistory(GetOperatorStr(inputedOperator));
+                lblInputHistory.Text = m_calcManager.History;
                 return;
             }
 
             if (m_isShowingFinalAnswer == true)
             {
-                calcManager.Reset3();
+                m_calcManager.ResetValue();
 
                 m_isShowingFinalAnswer = false;
             }
 
             if (m_isShowingAnswer == true)
             {
-                calcManager.EnterTempHistory();
+                m_calcManager.EnterTempHistory();
             }
 
-            calcManager.CalculateConstant = double.Parse(lblInputField.Text);
+            m_calcManager.CalculateConstant = double.Parse(lblInputField.Text);
 
             // 保持されている四則演算がなければ
-            if (calcManager.HasNextOperator() == false)
+            if (m_calcManager.HasNextOperator() == false)
             {
                 // 今回の入力値を答えとする
-                calcManager.ConstantToAnswer();
+                m_calcManager.AssignConstantToAnswer();
 
             }
             // 保持されている四則演算があれば
             else
             {
-                if (calcManager.WillDiv0() == true)
+                if (m_calcManager.NextCalculationIsDiv0() == true)
                 {
                     MessageBox.Show("0で割ることはできません");
                     return;
                 }
                 else
                 {
-                    calcManager.DoCalculate2();
+                    m_calcManager.Calculate();
                 }
             }
 
@@ -395,12 +428,12 @@ namespace TrainingCalculator2
             m_isShowingAnswer = true;
             m_beforeInputIsOperator = true;
 
-            calcManager.NextOperator = inputedOperator;
+            m_calcManager.NextOperator = inputedOperator;
 
-            lblInputField.Text = calcManager.Answer.ToString();
-            calcManager.CalculateConstantToInputHistory();
-            calcManager.IntoTempHistory(GetOperatorStr(inputedOperator));
-            lblInputHistory.Text = calcManager.History;
+            lblInputField.Text = m_calcManager.Answer.ToString();
+            m_calcManager.AssignCalculateConstantToInputHistory();
+            m_calcManager.AssignTempHistory(GetOperatorStr(inputedOperator));
+            lblInputHistory.Text = m_calcManager.History;
 
             btnPlusMinus.Enabled = true;
             btnBackSpace.Enabled = false;
